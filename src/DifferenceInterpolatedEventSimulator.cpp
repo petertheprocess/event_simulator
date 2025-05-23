@@ -118,8 +118,17 @@ std::vector<Event>& DifferenceInterpolatedEventSimulator::getEvents(
 std::vector<cv::Mat>& DifferenceInterpolatedEventSimulator::getEventFrame(
     const cv::Mat prev_frame, const cv::Mat frame, int& num_frames) {
   num_frames = 1;
-  cv::Mat darker, lighter, darker_mask, lighter_mask, lighter_events,
-      darker_events;
+  const auto& size = prev_frame.size;
+  const auto& cols = prev_frame.cols;
+  const auto& rows = prev_frame.rows;
+  const int type = prev_frame.type();
+  cv::Mat darker(rows, cols, type);
+  cv::Mat lighter(rows, cols, type);
+  cv::Mat darker_mask(rows, cols, type);
+  cv::Mat lighter_mask(rows, cols, type);
+  cv::Mat lighter_events(rows, cols, type);
+  cv::Mat darker_events(rows, cols, type);
+
 
   out_frames_.resize(num_frames);
 
